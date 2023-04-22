@@ -29,6 +29,7 @@ import services.*
 fun main() = application {
     val fileService = FileService()
     val quoteService = QuoteService()
+    val streakService = StreakTrack(fileService)
     Window(
         title = "OnlyGratitude",
         state = rememberWindowState(width = 800.dp, height = 600.dp),

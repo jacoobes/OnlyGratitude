@@ -7,9 +7,9 @@ import javax.swing.filechooser.FileNameExtensionFilter
 class FileService {
     private var file: File? = null
     private val workingDirectoryPath = Paths.get(System.getProperty("user.dir"), "../og")
-    private val otherPath = Paths.get("$workingDirectoryPath/other")
-    private val dataPath = Paths.get("$workingDirectoryPath/data")
-    private val journalsPath = Paths.get(dataPath.toString(), "journals")
+    val otherPath = Paths.get("$workingDirectoryPath/other")
+    val dataPath = Paths.get("$workingDirectoryPath/data")
+    val journalsPath = Paths.get(dataPath.toString(), "journals")
     fun fileOpen(): String? {
         println(workingDirectoryPath)
         val fileChooser = JFileChooser(journalsPath.toString())

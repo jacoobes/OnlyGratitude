@@ -1,19 +1,21 @@
-package streak
+package services
 
 import java.io.File
+import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
-
-class steakTrack {
+class StreakTrack(
+    private val fileService: FileService
+) {
 
     /*
      * Call this method when one sign in is done
      */
     fun startSteakTrack(){
-
-        val userFile = File("./data/user.og")
+        val userConfigPath = Paths.get(fileService.dataPath.toString(), "user.og")
+        val userFile = File(userConfigPath.toString())
 
         val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
         try{
