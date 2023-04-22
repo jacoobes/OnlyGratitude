@@ -20,6 +20,7 @@ Run the desktop application: `./gradlew :composeApp:run`
     - commonMain/ 
       - Anything that isn't specific to desktop applications can be put here. (Logic, methods, classes)
       - Will hypothetically contain all the logic and things needed to make core features work
+      - You might see some UI stuff in there, but its there because I created a multiplatform project.
     - desktopMain/
       - Anything Compose related. This is where the main UI will be. 
       - Everything displayable will be put here.
