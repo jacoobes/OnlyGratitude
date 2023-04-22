@@ -23,7 +23,7 @@ fun JournalView(textContent: MutableState<String>) {
     var fontSize = remember { mutableStateOf(16.sp) }
     var fontFamily = remember { mutableStateOf<SystemFontFamily>(FontFamily.Cursive) }
     var textAlign = remember { mutableStateOf(TextAlign.Start) }
-    
+
     var showSettings by remember {
         mutableStateOf(false)
     }
