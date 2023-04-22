@@ -26,7 +26,7 @@ Run the desktop application: `./gradlew :composeApp:run`
       - Everything displayable will be put here.
 ### Files
 - *.kt files
-  - Any kotlin source file
+  - Any kotlin source org.soloqueue.app.file
 - gitignore
   - Any files / folders that are specified here will be ignored by git.
 - build.gradle.kts

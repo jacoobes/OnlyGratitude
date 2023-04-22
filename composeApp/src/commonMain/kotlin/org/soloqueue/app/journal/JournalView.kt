@@ -1,5 +1,5 @@
 package org.soloqueue.app.journal
-
+import java.io.File
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
@@ -11,23 +11,29 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
-fun JournalView(
-) {
+fun JournalView() {
+    //Create a File Object (Dummy Path)
+    val file = File("/Users/zpham/IdeaProjects/OnlyGratitude/testText.txt");
+    //If Path DNE, create the path all the way to directory
+    if(!file.parentFile.exists()){
+        file.parentFile.mkdirs()
+    }
+
     var value by remember {
         mutableStateOf(
             TextFieldValue(
-                text = "Hello",
+                //Check the file and read it
+                text = file.readText(),
              )
         )
     }
+
     BasicTextField(
         value = value,
         onValueChange = {
-            value = it.copy(
-                text =  it.text
-            )
+            value = it
+            file.writeText(it.text)
         },
         cursorBrush = SolidColor(MaterialTheme.colorScheme.surface)
     )
-
 }
