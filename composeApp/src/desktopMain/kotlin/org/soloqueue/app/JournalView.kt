@@ -3,8 +3,9 @@ package org.soloqueue.app
 import java.io.File
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -12,29 +13,53 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
-fun JournalView() {
+fun JournalView(textContent: MutableState<String>) {
     //Create a File Object (Dummy Path)
-    val file = File("C:\\Users\\jacob\\OneDrive\\Desktop\\Projects\\OnlyGratitude\\testText.txt");
-    //If Path DNE, create the path all the way to directory
-    if(!file.parentFile.exists()){
-        file.parentFile.mkdirs()
-    }
-
-    var value by remember {
-        mutableStateOf(
-            TextFieldValue(
-                //Check the file and read it
-                text = file.readText(),
-            )
-        )
+    var fontSize = remember { mutableStateOf(16.sp) }
+    var fontFamily = remember { mutableStateOf<SystemFontFamily>(FontFamily.Cursive) }
+    var textAlign = remember { mutableStateOf(TextAlign.Start) }
+    
+    var showSettings by remember {
+        mutableStateOf(false)
     }
 
     BasicTextField(
-        value = value,
+        value = textContent.value,
         onValueChange = {
-            value = it
-            file.writeText(it.text)
+            textContent.value = it
         },
-        cursorBrush = SolidColor(MaterialTheme.colorScheme.surface)
+        textStyle = TextStyle(
+            color = MaterialTheme.colorScheme.inverseSurface,
+            fontSize = fontSize.value,
+            fontFamily = fontFamily.value,
+            textAlign = textAlign.value,
+        ),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
     )
+    Column (
+        modifier = Modifier.fillMaxSize()
+    ){
+        Row(
+            modifier = Modifier.align(Alignment.End)
+        ) {
+            if (!showSettings) {
+                IconButton(onClick = {
+                    showSettings = true
+                }) {
+                    Icon(Icons.Sharp.Settings, "Settings")
+                }
+            }
+
+            if(showSettings) {
+                SettingsScreen(
+                   // onFontFamilySelected = { fontFamily = it as GenericFontFamily },
+                    onSaveChanges = {},
+                    onDismiss = { showSettings = false },
+                    fontFamily = fontFamily,
+                    textAlign = textAlign,
+                    textSize = fontSize
+                )
+            }
+        }
+    }
 }
