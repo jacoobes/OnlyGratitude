@@ -8,7 +8,7 @@ Run the desktop application: `./gradlew :composeApp:run`
 
 - Ensure you have [intellij](https://www.jetbrains.com/idea/download/#section=windows) installed
 - Ensure you have [git](https://git-scm.com/) installed 
-- In a terminal, run `git clone link`
+- In a terminal, run `git clone https://github.com/jacoobes/OnlyGratitude.git`
 - Your project should appear in OnlyGratitude directory
 
 
