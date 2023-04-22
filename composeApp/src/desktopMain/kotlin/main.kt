@@ -27,6 +27,8 @@ import services.*
 @OptIn(ExperimentalMaterial3Api::class)
 
 fun main() = application {
+    val fileService = FileService()
+    val quoteService = QuoteService()
     Window(
         title = "OnlyGratitude",
         state = rememberWindowState(width = 800.dp, height = 600.dp),
