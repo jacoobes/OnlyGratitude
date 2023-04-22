@@ -1,5 +1,7 @@
 package org.soloqueue.app
 
+import EmptyJournalEntry
+import JournalEntry
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
@@ -16,7 +18,14 @@ fun AddIcon() {
 fun OpenFile(text: MutableState<String>, fileService: FileService) {
     FloatingActionButton(
         onClick = {
-            text.value = fileService.fileOpen() ?: "Open Something :)"
+            val dialogResponse = fileService.fileOpen()
+            if(dialogResponse == null) {
+                text.value = fileService.fileOpen() ?: "Open Something :)"
+            } else if(dialogResponse == "-1") {
+                text.value = text.value
+            } else {
+                text.value = dialogResponse
+            }
         },
         content = { AddIcon() }
     )

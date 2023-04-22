@@ -8,6 +8,7 @@ import androidx.compose.material.icons.sharp.Refresh
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.compose.ui.window.rememberWindowState
 import org.soloqueue.app.App
 import org.soloqueue.app.JournalView
 import org.soloqueue.app.OpenFile
+import org.soloqueue.app.Save
 import services.*
 
 
@@ -43,29 +45,46 @@ fun main() = application {
                 topBar = {
                     WindowDraggableArea {
                         CenterAlignedTopAppBar(
-                            title =  { Text("Welcome to OnlyGratitude") }
+                            title =  { Text(
+                                "OnlyGratitude",
+                                color = MaterialTheme.colorScheme.onSecondary
+                            ) },
+                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                            )
                         )
                     }
                 },
-                snackbarHost = {
-                    SnackbarHost(snackbarHostState)
-                },
+                snackbarHost = { SnackbarHost(snackbarHostState) },
                 floatingActionButton =  {
                     OpenFile(textContent, fileService)
                 },
                 bottomBar = {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        //settings here?
-
+                    Column(Modifier.fillMaxWidth()) {
+                        Divider()
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(
+                                    BorderStroke(1.dp, MaterialTheme.colorScheme.inverseOnSurface)
+                                )) {
+                            Save(fileService, EmptyJournalEntry)
+                        }
                     }
                 }
             ) {
-                Column (Modifier.padding(it.calculateTopPadding())) {
+                Column (
+                    Modifier
+                        .padding(it.calculateTopPadding())
+                        .fillMaxWidth()
+                ) {
                     Row (
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ){
-                        IconButton({ inspirationalQuote.value = quoteService.quoteGen() }) {
+                        IconButton(
+                            { inspirationalQuote.value = quoteService.quoteGen() },
+                        ) {
                             Icon(Icons.Sharp.Refresh, "refresh")
                         }
                         Text(

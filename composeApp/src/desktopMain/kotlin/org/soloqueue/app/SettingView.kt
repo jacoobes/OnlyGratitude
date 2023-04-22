@@ -2,7 +2,9 @@ package org.soloqueue.app
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.DropdownMenu
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.ArrowDropDown
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -30,7 +32,7 @@ fun SettingsScreen(
 
     Column(
         Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -98,4 +100,4 @@ fun SettingsScreen(
             }
         }
     }
-}
+

@@ -34,7 +34,6 @@ class FileService {
 
 
     fun fileOpen(): String? {
-        println(workingDirectoryPath)
         val fileChooser = JFileChooser(journalsPath.toString())
         val filter = FileNameExtensionFilter("Journal Files (*.jnl)", "jnl")
         fileChooser.fileFilter = filter
@@ -42,6 +41,8 @@ class FileService {
         return if (returnVal == JFileChooser.APPROVE_OPTION){
             file = fileChooser.selectedFile
             fileRead(file)
+        } else if(returnVal == JFileChooser.CANCEL_OPTION){
+            "-1"
         } else {
             null
         }
