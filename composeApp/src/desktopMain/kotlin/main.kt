@@ -1,4 +1,5 @@
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.window.WindowDraggableArea
@@ -81,6 +82,7 @@ fun main() = application {
                     Row (
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.inversePrimary).fillMaxWidth(),
                     ){
                         IconButton(
                             { inspirationalQuote.value = quoteService.quoteGen() },

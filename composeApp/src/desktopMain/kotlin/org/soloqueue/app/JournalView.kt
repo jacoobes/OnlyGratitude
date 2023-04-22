@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.GenericFontFamily
 import androidx.compose.ui.text.font.SystemFontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun JournalView(textContent: MutableState<String>) {

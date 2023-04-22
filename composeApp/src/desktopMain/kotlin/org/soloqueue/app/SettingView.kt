@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package org.soloqueue.app
 
 import androidx.compose.foundation.clickable
@@ -12,11 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.GenericFontFamily
-import androidx.compose.ui.text.font.SystemFontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
@@ -29,7 +29,12 @@ fun SettingsScreen(
     fontFamily: MutableState<SystemFontFamily>,
     textAlign: MutableState<TextAlign>
 ) {
-
+    var expanded = remember { mutableStateOf(false) }
+    var default = FontFamily.Default
+    var monospace = FontFamily.Monospace
+    var serif = FontFamily.Serif
+    var sansSerif = FontFamily.SansSerif
+    var cursive = FontFamily.Cursive
     Column(
         Modifier
             .fillMaxWidth()
@@ -48,22 +53,39 @@ fun SettingsScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text("Font Family")
-        DropdownMenu(
-            expanded = false,
-            onDismissRequest = {},
+        Box(
+            modifier = Modifier.clickable(onClick = { expanded.value = !expanded.value })
         ) {
-            listOf(
-                FontFamily.Default,
-                FontFamily.Monospace,
-                FontFamily.SansSerif,
-                FontFamily.Serif,
-                FontFamily.Cursive
-            ).forEach { family ->
-                DropdownMenuItem(
-                    text = { Text(family.toString()) },
-                    onClick = { fontFamily.value = family }
-                )
+            Text(
+                fontFamily.value.toString().substringAfter("FontFamily."),
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            Icon(
+                Icons.Sharp.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.CenterEnd)
+            )
+            DropdownMenu(
+                expanded = expanded.value,
+                onDismissRequest = { expanded.value = false },
+                //modifier = Modifier.align(Alignment.End)
+            ) {
+                listOf(
+                    default,
+                    monospace,
+                    sansSerif,
+                    serif,
+                    cursive
+                ).forEach { family ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(family.toString().substringAfter("FontFamily."))
+                        },
+                        onClick = { fontFamily.value = family }
+                    )
+                }
             }
+        }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text("Text Alignment")
