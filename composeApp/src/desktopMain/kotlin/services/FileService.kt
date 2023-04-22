@@ -10,6 +10,29 @@ class FileService {
     val otherPath = Paths.get("$workingDirectoryPath/other")
     val dataPath = Paths.get("$workingDirectoryPath/data")
     val journalsPath = Paths.get(dataPath.toString(), "journals")
+
+
+
+    /*
+     * This method creates a new journal file as txt
+     * @param date: String, the current date. format: yyyyMMdd
+     * so the file name could be sorted by date
+     * @param title: String
+     * @param text: String
+     * Filename: date_title.txt
+     */
+    fun newJournal(date: String, title: String, text: String) {
+        val file = File(journalsPath.toString(), date + "_" + "$title.jnl")
+        if(file.exists()) {
+            throw Exception("File already exists")
+        }else {
+            file.createNewFile()
+        }
+        file.writeText(text)
+    }
+
+
+
     fun fileOpen(): String? {
         println(workingDirectoryPath)
         val fileChooser = JFileChooser(journalsPath.toString())
