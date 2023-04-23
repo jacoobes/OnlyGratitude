@@ -10,6 +10,9 @@ class StreakTrack(
     private val fileService: FileService
 ) {
     private var data: List<Int>? = null
+    init {
+        startStreakTrack()
+    }
     /*
      * Call this method when one sign in is done
      */

@@ -1,5 +1,7 @@
 package org.soloqueue.app
 import JournalEntry
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -8,7 +10,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.SystemFontFamily
@@ -21,7 +25,6 @@ fun JournalView(textContent: MutableState<JournalEntry>) {
     var fontSize = remember { mutableStateOf(16.sp) }
     var fontFamily = remember { mutableStateOf<SystemFontFamily>(FontFamily.Cursive) }
     var textAlign = remember { mutableStateOf(TextAlign.Start) }
-
     var showSettings by remember {
         mutableStateOf(false)
     }
@@ -51,9 +54,10 @@ fun JournalView(textContent: MutableState<JournalEntry>) {
             modifier = Modifier.align(Alignment.End)
         ) {
             if (!showSettings) {
-                IconButton(onClick = {
-                    showSettings = true
-                }) {
+
+                IconButton(
+                    onClick = { showSettings = true },
+                ) {
                     Icon(Icons.Sharp.Settings, "Settings")
                 }
             }

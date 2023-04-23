@@ -21,6 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.AlignCenter
+import compose.icons.feathericons.AlignLeft
+import compose.icons.feathericons.AlignRight
 
 @Composable
 fun SettingsScreen(
@@ -80,8 +84,11 @@ fun SettingsScreen(
                 ).forEach { family ->
                     DropdownMenuItem(
                         text = {
-                            Text(family.toString().substringAfter("FontFamily."))
+                            Text(
+                                family.toString().substringAfter("FontFamily.")
+                            )
                         },
+                        modifier = Modifier.padding(start = 3.dp, end = 3.dp),
                         onClick = { fontFamily.value = family }
                     )
                 }
@@ -90,16 +97,16 @@ fun SettingsScreen(
         Text("Text Alignment")
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(.5f)
         ) {
-            TextButton(onClick = { textAlign.value = TextAlign.Start }) {
-                Text("Left")
+            FilledTonalIconButton(onClick = { textAlign.value = TextAlign.Start }) {
+                Icon(FeatherIcons.AlignLeft, null)
             }
-            TextButton(onClick = { textAlign.value = TextAlign.Center }) {
-                Text("Center")
+            FilledTonalIconButton(onClick = { textAlign.value = TextAlign.Center }) {
+                Icon(FeatherIcons.AlignCenter, null)
             }
-            TextButton(onClick = { textAlign.value = TextAlign.End }) {
-                Text("Right")
+            FilledTonalIconButton(onClick = { textAlign.value = TextAlign.End }) {
+                Icon(FeatherIcons.AlignRight, null)
             }
         }
         Row(

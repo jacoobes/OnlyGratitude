@@ -4,15 +4,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ExitToApp
-import androidx.compose.material.icons.sharp.Face
-import androidx.compose.material.icons.sharp.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Moon
 import compose.icons.feathericons.SkipBack
 import compose.icons.feathericons.Sun
-import org.jetbrains.compose.resources.painterResource
 
 
 @Composable
