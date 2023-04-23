@@ -1,9 +1,6 @@
 package org.soloqueue.app
 import JournalEntry
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Settings
@@ -14,12 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.GenericFontFamily
 import androidx.compose.ui.text.font.SystemFontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun JournalView(textContent: MutableState<JournalEntry>) {
@@ -37,7 +32,7 @@ fun JournalView(textContent: MutableState<JournalEntry>) {
             textContent.value = JournalEntry(
                 textContent.value.date,
                 textContent.value.fileName,
-                it
+                it.replace("\t", "     ") //fix compose tab issue
             )
         },
         modifier = Modifier.padding(10.dp),
@@ -62,10 +57,8 @@ fun JournalView(textContent: MutableState<JournalEntry>) {
                     Icon(Icons.Sharp.Settings, "Settings")
                 }
             }
-
             if(showSettings) {
                 SettingsScreen(
-                   // onFontFamilySelected = { fontFamily = it as GenericFontFamily },
                     onSaveChanges = {},
                     onDismiss = { showSettings = false },
                     fontFamily = fontFamily,

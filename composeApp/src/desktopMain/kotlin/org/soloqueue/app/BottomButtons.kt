@@ -1,32 +1,68 @@
 package org.soloqueue.app
 
-import JournalEntry
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ExitToApp
-import androidx.compose.material.icons.sharp.KeyboardArrowDown
-import androidx.compose.material.icons.sharp.List
+import androidx.compose.material.icons.sharp.Face
+import androidx.compose.material.icons.sharp.ThumbUp
 import androidx.compose.runtime.Composable
-import services.FileService
+import androidx.compose.runtime.MutableState
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Moon
+import compose.icons.feathericons.SkipBack
+import compose.icons.feathericons.Sun
+import org.jetbrains.compose.resources.painterResource
 
 
 @Composable
-fun Save(
-    fileService: FileService,
-    journalEntry: JournalEntry
-) {
+fun OpenMentalHealthResources() {
     IconButton(
         onClick = {
-            println("save")
-            fileService.fileSave("")
+            //todo: redirect to mental health
         }
     ) {
+
         Icon(
-            Icons.Sharp.ExitToApp, contentDescription = "Open resources")
+            Icons.Sharp.ExitToApp, contentDescription = "Open resources"
+        )
     }
 }
 
-fun Open() {
+@Composable
+fun DarkModeIcon() {
+    Icon(
+        FeatherIcons.Moon,
+        null
+    )
+}
+@Composable
+fun LightModeIcon() {
+    Icon(
+        FeatherIcons.Sun,
+        null
+    )
+}
+@Composable
+fun LightMode(isDarkModeState: MutableState<Boolean>) {
+    IconButton(
+        onClick = {
+            isDarkModeState.value = !isDarkModeState.value
+        }
+    ) {
+        if(isDarkModeState.value) {
+            DarkModeIcon()
+        } else {
+            LightModeIcon()
+        }
+    }
+}
 
+@Composable
+fun GoBack(emptyState: MutableState<Boolean>) {
+    IconButton({
+        emptyState.value = true
+    }) {
+        Icon(FeatherIcons.SkipBack, "")
+    }
 }

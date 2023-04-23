@@ -32,22 +32,6 @@ class FileService {
     }
 
 
-
-    fun fileOpen(): String? {
-        val fileChooser = JFileChooser(journalsPath.toString())
-        val filter = FileNameExtensionFilter("Journal Files (*.jnl)", "jnl")
-        fileChooser.fileFilter = filter
-        val returnVal = fileChooser.showOpenDialog(null)
-        return if (returnVal == JFileChooser.APPROVE_OPTION){
-            file = fileChooser.selectedFile
-            fileRead(file)
-        } else if(returnVal == JFileChooser.CANCEL_OPTION){
-            "-1"
-        } else {
-            null
-        }
-    }
-
     private fun fileRead(file: File?): String? {
         return file?.readText()
     }

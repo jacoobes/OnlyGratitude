@@ -30,12 +30,12 @@ fun SettingsScreen(
     fontFamily: MutableState<SystemFontFamily>,
     textAlign: MutableState<TextAlign>
 ) {
-    var expanded = remember { mutableStateOf(false) }
-    var default = FontFamily.Default
-    var monospace = FontFamily.Monospace
-    var serif = FontFamily.Serif
-    var sansSerif = FontFamily.SansSerif
-    var cursive = FontFamily.Cursive
+    val expanded = remember { mutableStateOf(false) }
+    val default = FontFamily.Default
+    val monospace = FontFamily.Monospace
+    val serif = FontFamily.Serif
+    val sansSerif = FontFamily.SansSerif
+    val cursive = FontFamily.Cursive
     Column(
         Modifier
             .fillMaxWidth()

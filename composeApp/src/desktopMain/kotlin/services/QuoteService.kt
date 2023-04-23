@@ -2,15 +2,15 @@ package services
 
 class QuoteService {
     private val quotes = listOf(
-        "The best way to predict the future is to invent it.",
-        "You can't build a reputation on what you are going to do.",
-        "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-        "Believe you can and you're halfway there.",
-        "I have not failed. I've just found 10,000 ways that won't work.",
-        "Don't watch the clock; do what it does. Keep going.",
-        "Quality is not an act, it is a habit.",
-        "The only way to do great work is to love what you do.",
-        "You're Gonna Care What Other People Think And Be Someone You're Not Your Whole Life? You’re Fine As You Are. So, Talk In Your Own Words."
+        "Develop an attitude of gratitude. Say thank you to everyone you meet for everything they do for you. - Brian Tracy",
+        "When gratitude becomes an essential foundation in our lives, miracles start to appear everywhere. - Emmanuel Dagher",
+        "True forgiveness is when you can say, 'Thank you for that experience. - Oprah",
+        "The Universe is not outside of you. Look inside yourself; everything that you want, you already are. - Rumi",
+        "When you are grateful, fear disappears and abundance appears. - Tony Robbins",
+        "What separates privilege from entitlement is gratitude. - Brené Brown",
+        "Remember that sometimes not getting what you want is a wonderful stroke of luck. - Dalai Lama",
+        "Don't let negativity from yesterday dull the sparkle of today. - Doreen White",
+        "Instead of thinking 'I will be happy when,' try thinking 'I will be happy now. - Unknown"
     )
     fun quoteGen(): String{
         return quotes.random()
