@@ -100,7 +100,7 @@ class StreakTrack(private val fileService: FileService) {
         val currentYear: Int = nowDate.format(DateTimeFormatter.ofPattern("yyyy")).toInt()
         val currentMonth: Int = nowDate.format(DateTimeFormatter.ofPattern("MM")).toInt()
         val currentDay: Int = nowDate.format(DateTimeFormatter.ofPattern("dd")).toInt()
-        val lastEditYear: Int = lastEditDate % 10000;
+        val lastEditYear: Int = lastEditDate % 10000
         val lastEditMonth: Int = lastEditDate / 1000000
         val lastEditDay: Int = lastEditDate / 10000 % 100
 
