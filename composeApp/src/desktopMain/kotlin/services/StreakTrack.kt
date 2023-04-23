@@ -18,11 +18,14 @@ class StreakTrack(private val fileService: FileService) {
     fun startStreakTrack():Int {
         val userConfigPath = Paths.get(fileService.dataPath.toString(), "user.og")
         val userFile = File(userConfigPath.toString())
-        var userStreak = data!!.elementAt(0)
-        val userSigninDate = data!!.elementAt(1)
-        val userEditDate = data!!.elementAt(2)
+        var userStreak:Int = data!!.elementAt(0)
+        val userSigninDate:Int = data!!.elementAt(1)
+        val userEditDate:Int = data!!.elementAt(2)
 
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
+        println("userSigninDate: $userSigninDate")
+        println("userEditDate: $userEditDate")
+
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMDDyyyy"))
 //        try {
             if (!userFile.exists()) {
                 userFile.createNewFile()
@@ -52,7 +55,8 @@ class StreakTrack(private val fileService: FileService) {
 
         val userFile = File(Paths.get(fileService.dataPath.toString(), "user.og").toString())
 
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMDDyyyy"))
+        val currentDate:Int = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy")).toInt()
+//        println("Current date: $currentDate")
         var userStreak = data!!.elementAt(0)
 //        val userSigninDate = data!!.elementAt(1)
         val userEditDate = data!!.elementAt(2)
@@ -95,10 +99,13 @@ class StreakTrack(private val fileService: FileService) {
         val nowDate = LocalDate.now()
         val currentYear: Int = nowDate.format(DateTimeFormatter.ofPattern("yyyy")).toInt()
         val currentMonth: Int = nowDate.format(DateTimeFormatter.ofPattern("MM")).toInt()
-        val currentDay: Int = nowDate.format(DateTimeFormatter.ofPattern("DD")).toInt()
-        val lastEditYear: Int = lastEditDate / 10000
-        val lastEditMonth: Int = (lastEditDate - lastEditYear * 10000) / 100
-        val lastEditDay: Int = lastEditDate - lastEditYear * 10000 - lastEditMonth * 100
+        val currentDay: Int = nowDate.format(DateTimeFormatter.ofPattern("dd")).toInt()
+        val lastEditYear: Int = lastEditDate % 10000;
+        val lastEditMonth: Int = lastEditDate / 1000000
+        val lastEditDay: Int = lastEditDate / 10000 % 100
+
+        println("Current date: $currentYear-$currentMonth-$currentDay")
+        println("Last edit date: $lastEditYear-$lastEditMonth-$lastEditDay")
 
         if (currentYear > lastEditYear) {
             if (currentMonth == 1 && currentDay == 1 && lastEditMonth == 12 && lastEditDay == 31)
