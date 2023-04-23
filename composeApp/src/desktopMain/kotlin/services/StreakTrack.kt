@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 class StreakTrack(private val fileService: FileService) {
     private var data: List<Int>? = null
     init {
+        data = getData()
         startStreakTrack()
     }
     /*
@@ -34,7 +35,8 @@ class StreakTrack(private val fileService: FileService) {
             if (userEditDate == -1) userStreak = 1
             else if (dateCompare(userEditDate) == 2) userStreak = 0
 
-            userFile.writeText("$userStreak\n$userSigninDate\n$userEditDate")
+            val toString: String = String.format("%d\n%08d\n%08d", userStreak, userSigninDate, userEditDate)
+            userFile.writeText(toString)
 
 //        } catch (e: Exception) {
 //            println("Error: ${e.message}")
@@ -50,7 +52,7 @@ class StreakTrack(private val fileService: FileService) {
 
         val userFile = File(Paths.get(fileService.dataPath.toString(), "user.og").toString())
 
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMDDyyyy"))
         var userStreak = data!!.elementAt(0)
 //        val userSigninDate = data!!.elementAt(1)
         val userEditDate = data!!.elementAt(2)
@@ -62,7 +64,9 @@ class StreakTrack(private val fileService: FileService) {
 
             if (userEditDate == -1) userStreak = 1
             else if (dateCompare(userEditDate) == 1) userStreak++
-            userFile.writeText("$userStreak\n$currentDate\n$currentDate")
+            val toString: String = String.format("%d\n%08d\n%08d", userStreak, currentDate, currentDate)
+            userFile.writeText(toString)
+//            userFile.writeText("$userStreak\n$currentDate\n$currentDate")
 
 //        } catch (e: Exception) {
 //            println("Error: ${e.message}")
@@ -77,7 +81,6 @@ class StreakTrack(private val fileService: FileService) {
         return if(data == null) {
             val userFile = File(Paths.get(fileService.dataPath.toString(), "user.og").toString())
             val parsedData = userFile.readText().split("\n").map { it.toInt() }
-            data = parsedData
             parsedData
         } else {
             data!!
@@ -92,27 +95,26 @@ class StreakTrack(private val fileService: FileService) {
         val nowDate = LocalDate.now()
         val currentYear: Int = nowDate.format(DateTimeFormatter.ofPattern("yyyy")).toInt()
         val currentMonth: Int = nowDate.format(DateTimeFormatter.ofPattern("MM")).toInt()
-        val currentDay: Int = nowDate.format(DateTimeFormatter.ofPattern("dd")).toInt()
+        val currentDay: Int = nowDate.format(DateTimeFormatter.ofPattern("DD")).toInt()
         val lastEditYear: Int = lastEditDate / 10000
         val lastEditMonth: Int = (lastEditDate - lastEditYear * 10000) / 100
         val lastEditDay: Int = lastEditDate - lastEditYear * 10000 - lastEditMonth * 100
 
-
-
         if (currentYear > lastEditYear) {
             if (currentMonth == 1 && currentDay == 1 && lastEditMonth == 12 && lastEditDay == 31)
-                return 0
-            return 2
+                return 1
         }
         if (currentMonth > lastEditMonth) {
             if (currentDay == 1 && lastEditDay == lastDay(lastEditMonth, lastEditYear))
-                return 0
-            return 2
+                return 1
         }
-        if (currentDay > (lastEditDay + 1)) {
-            return 2
+        if (currentDay == (lastEditDay + 1)) {
+            return 1
+        } else if(currentDay == lastEditDate) {
+            return 0
         }
-        return 1
+        return 2
+
     }
 
     private fun isLeapYear(year: Int): Boolean {
