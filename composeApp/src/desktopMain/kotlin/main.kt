@@ -40,7 +40,10 @@ fun main() = application {
     ) {
         val snackbarHostState = remember { SnackbarHostState() }
         val inspirationalQuote = remember { mutableStateOf(quoteService.quoteGen()) }
-        val textContent = remember { mutableStateOf("Open something :)") }
+        val textContent = remember { mutableStateOf(EmptyJournalEntry) }
+        val emptyState = remember { mutableStateOf(isEmpty(textContent.value)) }
+        val titleOfJournal = remember { mutableStateOf("") }
+        val logo = painterResource("img.png")
         App {
             Scaffold(
                 topBar = {
@@ -52,7 +55,14 @@ fun main() = application {
                             ) },
                             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
-                            )
+                            ),
+                            navigationIcon = {
+                                Icon(
+                                    logo,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(width = 50.dp, height = 50.dp)
+                                )
+                            }
                         )
                     }
                 },

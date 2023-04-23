@@ -28,7 +28,7 @@ fun JournalView(textContent: MutableState<String>) {
     var showSettings by remember {
         mutableStateOf(false)
     }
-    val logo = painterResource("img.png")
+
     BasicTextField(
         value = textContent.value,
         onValueChange = {
