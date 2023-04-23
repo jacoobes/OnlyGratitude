@@ -1,32 +1,49 @@
 package org.soloqueue.app
 
-import EmptyJournalEntry
-import JournalEntry
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Add
+import androidx.compose.material.icons.sharp.Check
+import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import services.FileService
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun AddIcon() {
     Icon(Icons.Sharp.Add, "Add")
 }
 @Composable
-fun OpenFile(text: MutableState<String>, fileService: FileService) {
+fun SaveIcon() {
+    Icon(Icons.Sharp.Check, "Save")
+}
+@Composable
+fun AddFile(
+    title: String,
+    setEmpty: MutableState<Boolean>,
+    fileService: FileService
+) {
     FloatingActionButton(
         onClick = {
-            val dialogResponse = fileService.fileOpen()
-            if(dialogResponse == null) {
-                text.value = fileService.fileOpen() ?: "Open Something :)"
-            } else if(dialogResponse == "-1") {
-                text.value = text.value
+            val date = LocalDate.now()
+            val dateString = date.format(DateTimeFormatter.ofPattern("MMddyyyy"))
+            //fileService.newJournal(dateString, title , "Enter Something :)")
+            if(setEmpty.value) {
+                //When FAB IS + ICON
             } else {
-                text.value = dialogResponse
+                //When FAB is Check
             }
+            setEmpty.value = !setEmpty.value
         },
-        content = { AddIcon() }
+        content = {
+            if(setEmpty.value) {
+                AddIcon()
+            } else {
+                SaveIcon()
+            }
+        }
     )
 }

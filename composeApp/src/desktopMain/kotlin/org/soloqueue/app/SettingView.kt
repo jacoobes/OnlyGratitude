@@ -6,7 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.ArrowDropDown
-import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.sharp.Check
+import androidx.compose.material.icons.sharp.CheckCircle
+import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -15,10 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.*
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -86,8 +87,6 @@ fun SettingsScreen(
                 }
             }
         }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
         Text("Text Alignment")
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -103,23 +102,23 @@ fun SettingsScreen(
                 Text("Right")
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            TextButton(onClick = {
+            IconButton(onClick = {
                 onSaveChanges()
                 onDismiss()
             }) {
-                Text("Save")
+                Icon(Icons.Sharp.Check, null)
             }
-            TextButton(onClick = {
-                onDismiss()
-            }
-            ) {
-                Text("Cancel")
-            }
+            IconButton(
+                onClick = { onDismiss() }, content = {
+                    Icon(Icons.Sharp.Close, null)
+                }
+            )
         }
     }
+
+}
 

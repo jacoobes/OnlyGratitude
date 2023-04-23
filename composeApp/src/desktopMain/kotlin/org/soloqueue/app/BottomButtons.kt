@@ -1,10 +1,12 @@
 package org.soloqueue.app
 
 import JournalEntry
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.ExitToApp
 import androidx.compose.material.icons.sharp.KeyboardArrowDown
+import androidx.compose.material.icons.sharp.List
 import androidx.compose.runtime.Composable
 import services.FileService
 
@@ -20,7 +22,8 @@ fun Save(
             fileService.fileSave("")
         }
     ) {
-        Icon(Icons.Sharp.KeyboardArrowDown, contentDescription = null)
+        Icon(
+            Icons.Sharp.ExitToApp, contentDescription = "Open resources")
     }
 }
 

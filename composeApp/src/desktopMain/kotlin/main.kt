@@ -3,32 +3,26 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.window.WindowDraggableArea
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Add
-import androidx.compose.material.icons.sharp.Refresh
 import androidx.compose.material3.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import org.soloqueue.app.App
-import org.soloqueue.app.JournalView
-import org.soloqueue.app.OpenFile
-import org.soloqueue.app.Save
+import org.jetbrains.compose.resources.painterResource
+import org.soloqueue.app.*
 import services.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-
 fun main() = application {
     val fileService = FileService()
     val quoteService = QuoteService()
@@ -39,6 +33,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
     ) {
         val snackbarHostState = remember { SnackbarHostState() }
+        val shouldViewJournals = remember { mutableStateOf(false) }
         val inspirationalQuote = remember { mutableStateOf(quoteService.quoteGen()) }
         val textContent = remember { mutableStateOf(EmptyJournalEntry) }
         val emptyState = remember { mutableStateOf(isEmpty(textContent.value)) }
@@ -49,10 +44,12 @@ fun main() = application {
                 topBar = {
                     WindowDraggableArea {
                         CenterAlignedTopAppBar(
-                            title =  { Text(
-                                "OnlyGratitude",
-                                color = MaterialTheme.colorScheme.onSecondary
-                            ) },
+                            title = {
+                                Text(
+                                    "OnlyGratitude",
+                                    color = MaterialTheme.colorScheme.onSecondary
+                                )
+                            },
                             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
                             ),
@@ -67,8 +64,12 @@ fun main() = application {
                     }
                 },
                 snackbarHost = { SnackbarHost(snackbarHostState) },
-                floatingActionButton =  {
-                    OpenFile(textContent, fileService)
+                floatingActionButton = {
+                    AddFile(
+                        titleOfJournal.value,
+                        emptyState,
+                        fileService
+                    )
                 },
                 bottomBar = {
                     Column(Modifier.fillMaxWidth()) {
@@ -78,39 +79,72 @@ fun main() = application {
                                 .fillMaxWidth()
                                 .border(
                                     BorderStroke(1.dp, MaterialTheme.colorScheme.inverseOnSurface)
-                                )) {
+                                )
+                        ) {
                             Save(fileService, EmptyJournalEntry)
                         }
                     }
                 }
             ) {
-                Column (
-                    Modifier
-                        .padding(it.calculateTopPadding())
-                        .fillMaxWidth()
-                ) {
-                    Row (
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.background(MaterialTheme.colorScheme.inversePrimary).fillMaxWidth(),
-                    ){
-                        IconButton(
-                            { inspirationalQuote.value = quoteService.quoteGen() },
-                        ) {
-                            Icon(Icons.Sharp.Refresh, "refresh")
-                        }
-                        Text(
-                            inspirationalQuote.value,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Surface(
+                if (emptyState.value) {
+                    Column(
                         Modifier
-                            .fillMaxSize(),
-                        color = MaterialTheme.colorScheme.secondaryContainer
+                            .padding(it.calculateTopPadding())
+                            .fillMaxWidth()
                     ) {
-                        JournalView(textContent)
+                        Row {
+                            Column(
+                                horizontalAlignment = Alignment.Start,
+                                verticalArrangement = Arrangement.spacedBy(75.dp),
+                                modifier = Modifier.fillMaxHeight()
+                            ) {
+                                Row(Modifier.padding(vertical = 10.dp)) {
+                                    Text(
+                                        AnnotatedString(
+                                            inspirationalQuote.value,
+                                            spanStyle = SpanStyle(
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                        ),
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                                //Maybe add something here to add the streak value
+                                Text(
+                                    AnnotatedString("You've been on \uD83D\uDD25 for x days!"),
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Button(
+                                    { shouldViewJournals.value = !shouldViewJournals.value },
+                                ) {
+                                    Text("View Journals")
+                                }
+                            }
+                        }
                     }
+                } else {
+                    Column(
+                        Modifier.padding(it.calculateTopPadding())
+                    ) {
+                        OutlinedTextField(
+                            value = titleOfJournal.value,
+                            placeholder = { Text("Enter Title") },
+                            onValueChange = { txtFieldValue ->
+                                titleOfJournal.value = txtFieldValue
+                            },
+                        )
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.onSurface),
+                            shadowElevation = 10.dp
+                        ) {
+                            JournalView(textContent)
+                        }
+                    }
+                }
+                if (shouldViewJournals.value) {
+                    ShowAllJournalsWindow(fileService, shouldViewJournals)
                 }
             }
         }
