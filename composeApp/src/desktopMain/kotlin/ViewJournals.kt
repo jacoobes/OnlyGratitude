@@ -23,16 +23,45 @@ fun ShowAllJournalsWindow(
     shouldShow: MutableState<Boolean>
 ) {
     val state = rememberWindowState()
+    var selectedFile by remember { mutableStateOf<File?>(null) }
     Window(
         onCloseRequest = { shouldShow.value = !shouldShow.value },
-        state = state
+        state = state,
+        title = "OnlyGratitude - View Journals"
     ) {
         App(isDarkMode) {
             Surface(Modifier.fillMaxSize()) {
-                Text("Show journals")
-
+                val txtFiles = fileService.getTxtFiles()
+                    .map { file ->
+                        val pattern = "MMddyyyy"
+                        val date = SimpleDateFormat(pattern).parse(file.nameWithoutExtension)
+                        date to file
+                    }
+                Column (Modifier.fillMaxSize()) {
+                    txtFiles.forEach { (date, file) ->
+                        val formattedDate = SimpleDateFormat("MMM dd, yyyy").format(date)
+                        val fileName = file.nameWithoutExtension.substringAfter("_")
+                       Text(
+                           text = "$formattedDate - $fileName",
+                           modifier = Modifier.clickable {
+                               selectedFile = if (selectedFile == file) null else file
+                            }.padding(16.dp),
+                           style = MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.inverseSurface,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        )
+                        if (selectedFile == file) {
+                            val fileContent = fileService.fileRead(file)
+                            Text(
+                                text = fileContent?: "",
+                                modifier = Modifier.padding(start = 32.dp, end = 16.dp, bottom = 16.dp),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                }
             }
         }
     }
-
 }

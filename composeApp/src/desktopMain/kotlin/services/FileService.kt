@@ -1,5 +1,6 @@
 package services
 import java.io.File
+import java.nio.file.Files
 import java.nio.file.Paths
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
@@ -32,20 +33,21 @@ class FileService {
     }
 
 
-    private fun fileRead(file: File?): String? {
+    fun fileRead(file: File?): String? {
         return file?.readText()
     }
 
-    fun fileSave(text: String) {
-        if(file == null){
-            val fileChooser = JFileChooser()
-            val filter = FileNameExtensionFilter("Journal Files (*.jnl)", ".jnl")
-            fileChooser.fileFilter = filter
-            val returnVal = fileChooser.showSaveDialog(null)
-            if (returnVal == JFileChooser.APPROVE_OPTION){
-                file = fileChooser.selectedFile
+    fun getTxtFiles(): List<File> {
+        val txtFiles = mutableListOf<File>()
+        if (Files.isDirectory(journalsPath)) {
+            Files.list(journalsPath).forEach { filePath ->
+                val file = filePath.toFile()
+                if (file.isFile && file.extension.equals("jnl", ignoreCase = true)) {
+                    txtFiles.add(file)
+                }
             }
         }
-        file?.writeText(text)
+        return txtFiles
     }
+
 }
