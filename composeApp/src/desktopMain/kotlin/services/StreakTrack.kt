@@ -25,7 +25,7 @@ class StreakTrack(private val fileService: FileService) {
         println("userSigninDate: $userSigninDate")
         println("userEditDate: $userEditDate")
 
-        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMDDyyyy"))
+        val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
 //        try {
             if (!userFile.exists()) {
                 userFile.createNewFile()
