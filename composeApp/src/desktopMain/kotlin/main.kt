@@ -28,7 +28,7 @@ import services.StreakTrack
 fun main() = application {
     val fileService = FileService()
     val quoteService = QuoteService()
-    val streakService = StreakTrack(fileService)
+  //  val streakService = StreakTrack(fileService)
     Window(
         title = "OnlyGratitude",
         icon = painterResource("img.png"),
@@ -39,7 +39,7 @@ fun main() = application {
         val isDarkMode = remember { mutableStateOf(false) }
         val shouldViewJournals = remember { mutableStateOf(false) }
         val textContent = remember { mutableStateOf(EmptyJournalEntry) }
-        val streakData = remember { mutableStateOf(streakService.getData()) }
+        //val streakData = remember { mutableStateOf(streakService.getData()) }
         val emptyState = remember { mutableStateOf(isEmpty(textContent.value)) }
         val titleOfJournal = remember { mutableStateOf("") }
         val logo = painterResource("img.png")
@@ -75,7 +75,7 @@ fun main() = application {
                         textContent = textContent,
                         setEmpty = emptyState,
                         fileService = fileService,
-                        steakService = streakService
+                     //   steakService = streakService
                     )
                 },
                 bottomBar = {
@@ -117,12 +117,11 @@ fun main() = application {
                                         overflow = TextOverflow.Ellipsis
                                     )
                                 }
-                                val streakCount = streakData.value[0]
+                           //     val streakCount = streakData.value[0]
                                 //Maybe add something here to add the streak value
                                 Text(
                                     AnnotatedString(
-                                        "You've been on \uD83D\uDD25 " +
-                                                "for $streakCount day${if(streakCount == 1) "" else "s"}!"
+                                        "You've been on \uD83D\uDD25 " + "for x days"
                                     ),
                                     fontWeight = FontWeight.Bold
                                 )

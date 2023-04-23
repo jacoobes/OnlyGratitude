@@ -8,10 +8,6 @@ import java.time.format.DateTimeFormatter
 
 class StreakTrack(private val fileService: FileService) {
     private var data: List<Int>? = null
-    init {
-        data = getData()
-        startStreakTrack()
-    }
     /*
      * Call this method when one sign in is done
      */

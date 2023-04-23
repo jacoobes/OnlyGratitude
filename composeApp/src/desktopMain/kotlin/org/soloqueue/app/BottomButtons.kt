@@ -7,6 +7,7 @@ import androidx.compose.material.icons.sharp.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import compose.icons.FeatherIcons
+import compose.icons.feathericons.Link
 import compose.icons.feathericons.Moon
 import compose.icons.feathericons.SkipBack
 import compose.icons.feathericons.Sun
@@ -22,7 +23,7 @@ fun OpenMentalHealthResources() {
     ) {
 
         Icon(
-            Icons.Sharp.ExitToApp, contentDescription = "Open resources"
+            FeatherIcons.Link, contentDescription = "Open resources"
         )
     }
 }
