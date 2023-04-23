@@ -17,6 +17,7 @@ fun OpenMentalHealthResources() {
     IconButton(
         onClick = {
             //todo: redirect to mental health
+            openUrl("www.mentalhealthfirstaid.org/mental-health-resources/")
         }
     ) {
 
