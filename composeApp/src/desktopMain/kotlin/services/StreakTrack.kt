@@ -6,9 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
-class StreakTrack(
-    private val fileService: FileService
-) {
+class StreakTrack(private val fileService: FileService) {
     private var data: List<Int>? = null
     init {
         startStreakTrack()
@@ -16,28 +14,32 @@ class StreakTrack(
     /*
      * Call this method when one sign in is done
      */
-    fun startStreakTrack() {
+    fun startStreakTrack():Int {
         val userConfigPath = Paths.get(fileService.dataPath.toString(), "user.og")
         val userFile = File(userConfigPath.toString())
+        var userStreak = data!!.elementAt(0)
+        val userSigninDate = data!!.elementAt(1)
+        val userEditDate = data!!.elementAt(2)
 
         val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
-        try {
+//        try {
             if (!userFile.exists()) {
                 userFile.createNewFile()
                 userFile.writeText("0\n$currentDate\n-1")
             }
-            var userSteak = userFile.readText().split("\n")[0].toInt()
-            val userSigninDate = userFile.readText().split("\n")[1].toInt()
-            val userEditDate = userFile.readText().split("\n")[2].toInt()
+//            userStreak = userFile.readText().split("\n")[0].toInt()
+//            val userSigninDate = userFile.readText().split("\n")[1].toInt()
+//            val userEditDate = userFile.readText().split("\n")[2].toInt()
 
-            if (userEditDate == -1) userSteak = 1
-            else if (dateCompare(userEditDate) == 2) userSteak = 0
+            if (userEditDate == -1) userStreak = 1
+            else if (dateCompare(userEditDate) == 2) userStreak = 0
 
-            userFile.writeText("$userSteak\n$userSigninDate\n$userEditDate")
+            userFile.writeText("$userStreak\n$userSigninDate\n$userEditDate")
 
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        }
+//        } catch (e: Exception) {
+//            println("Error: ${e.message}")
+//        }
+        return userStreak
     }
 
 
@@ -49,18 +51,22 @@ class StreakTrack(
         val userFile = File(Paths.get(fileService.dataPath.toString(), "user.og").toString())
 
         val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMddyyyy"))
-        try {
-            var userSteak = userFile.readText().split("\n")[0].toInt()
+        var userStreak = data!!.elementAt(0)
+//        val userSigninDate = data!!.elementAt(1)
+        val userEditDate = data!!.elementAt(2)
+
+//        try {
+//            var userStreak = userFile.readText().split("\n")[0].toInt()
 //            val userSigninDate = userFile.readText().split("\n")[1].toInt()
-            val userEditDate = userFile.readText().split("\n")[2].toInt()
+//            val userEditDate = userFile.readText().split("\n")[2].toInt()
 
-            if (userEditDate == -1) userSteak = 1
-            else if (dateCompare(userEditDate) == 1) userSteak++
-            userFile.writeText("$userSteak\n$currentDate\n$currentDate")
+            if (userEditDate == -1) userStreak = 1
+            else if (dateCompare(userEditDate) == 1) userStreak++
+            userFile.writeText("$userStreak\n$currentDate\n$currentDate")
 
-        } catch (e: Exception) {
-            println("Error: ${e.message}")
-        }
+//        } catch (e: Exception) {
+//            println("Error: ${e.message}")
+//        }
     }
 
     /**
@@ -79,9 +85,9 @@ class StreakTrack(
     }
 
 
-    ///* Compare the last edit date to the current date
-//     * Return 0 if same day, 1 if last edit was yesterday, 2 if last edit was 2 or more days ago
-//     */
+    /* Compare the last edit date to the current date
+     * Return 0 if same day, 1 if last edit was yesterday, 2 if last edit was 2 or more days ago
+     */
     private fun dateCompare(lastEditDate: Int): Int {
         val nowDate = LocalDate.now()
         val currentYear: Int = nowDate.format(DateTimeFormatter.ofPattern("yyyy")).toInt()
