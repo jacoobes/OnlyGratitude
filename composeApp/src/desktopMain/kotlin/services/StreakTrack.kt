@@ -117,7 +117,7 @@ class StreakTrack(private val fileService: FileService) {
         }
         if (currentDay == (lastEditDay + 1)) {
             return 1
-        } else if(currentDay == lastEditDate) {
+        } else if(currentDay == lastEditDay) {
             return 0
         }
         return 2
