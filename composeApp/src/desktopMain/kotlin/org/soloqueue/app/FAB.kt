@@ -47,7 +47,7 @@ fun AddFile(
                 }
             } else {
                 val date = LocalDate.now()
-                val dateString = date.format(DateTimeFormatter.ofPattern("MMddyyyy"))
+                val dateString = date.format(DateTimeFormatter.ofPattern("MMDDyyyy"))
                 if(title.value.isEmpty()) {
                     scope.launch {
                         snackbarData.showSnackbar(

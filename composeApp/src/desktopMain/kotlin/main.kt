@@ -120,7 +120,10 @@ fun main() = application {
                                 val streakCount = streakData.value[0]
                                 //Maybe add something here to add the streak value
                                 Text(
-                                    AnnotatedString("You've been on \uD83D\uDD25 for $streakCount day${if(streakCount == 1) "" else "s"}!"),
+                                    AnnotatedString(
+                                        "You've been on \uD83D\uDD25 " +
+                                                "for $streakCount day${if(streakCount == 1) "" else "s"}!"
+                                    ),
                                     fontWeight = FontWeight.Bold
                                 )
                                 Button(
