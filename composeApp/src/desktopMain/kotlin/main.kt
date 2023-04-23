@@ -24,7 +24,7 @@ import services.QuoteService
 import services.StreakTrack
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 fun main() = application {
     val fileService = FileService()
     val quoteService = QuoteService()

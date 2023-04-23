@@ -48,12 +48,21 @@ fun AddFile(
             } else {
                 val date = LocalDate.now()
                 val dateString = date.format(DateTimeFormatter.ofPattern("MMddyyyy"))
-                scope.launch {
-                    fileService.newJournal(dateString, title.value, textContent.value.content)
-                    textContent.value = EmptyJournalEntry
-                    setEmpty.value = true
-                    title.value = ""
-                    steakService.editSteakTrack()
+                if(title.value.isEmpty()) {
+                    scope.launch {
+                        snackbarData.showSnackbar(
+                            message = "Title is empty",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                } else {
+                    scope.launch {
+                        fileService.newJournal(dateString, title.value, textContent.value.content)
+                        textContent.value = EmptyJournalEntry
+                        setEmpty.value = true
+                        title.value = ""
+                        steakService.editSteakTrack()
+                    }
                 }
             }
             setEmpty.value = false
