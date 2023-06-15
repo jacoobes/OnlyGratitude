@@ -121,7 +121,7 @@ fun main() = application {
                                 //Maybe add something here to add the streak value
                                 Text(
                                     AnnotatedString(
-                                        "You've been on \uD83D\uDD25 " + "for x days"
+                                        "You've been on \uD83D\uDD25 " + "for 1 days"
                                     ),
                                     fontWeight = FontWeight.Bold
                                 )
